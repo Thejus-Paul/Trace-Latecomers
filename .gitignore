@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Students List
+global/
+
+# All Testing Data
+testing_data/
