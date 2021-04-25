@@ -8,21 +8,31 @@ def find_latecomers(file_name,due_time):
 
 	# To read the contents from the given attendance list
 	#file_name = input("\nEnter the input filename: ")
-	with open('./testing_data/'+file_name+'.csv', encoding='utf-16') as f:
+	with open('./'+file_name+'.csv', encoding='utf-16') as f:
 		contents = f.read()
 
 	# To traverse and get the names
-	res = "\n\nLatecomers in Maths Class are:"
 	ontime_students = []
+	late_students = []
 	for line in contents.split('\n'):
 		items = line.split('\t')
 		if((len(items)>= 3) and items[1].split(" ")[0] == "Joined"):
 			time = (items[2].split(" ")[1])[:-3].split(":")
 			time = time[0] + time[1]
 			if((int(time) > int(due_time)) and (items[0] not in ontime_students)):
-				res += "\n"+ items[0]
+				late_students.append(items[0])
 			elif((int(time) <= int(due_time))):
 				ontime_students.append(items[0])
+	# To remove duplicates
+	late_students = list(set(late_students))
+
+	# To store the sorted list
+	late_students = sorted(late_students)
+	
+	# To print the Absentees list
+	res = "\n\nLatecomers in Maths Class are:"
+	for student in late_students:
+		res += "\n"+ student
 	return(res)
 
 def find_absentees(class_division,file_name):
@@ -33,7 +43,7 @@ def find_absentees(class_division,file_name):
 
 	# To read the contents from the given attendance list
 	#file_name = input("\nEnter the input filename: ")
-	with open('./testing_data/'+file_name+'.csv', encoding='utf-16') as f:
+	with open('./'+file_name+'.csv', encoding='utf-16') as f:
 		contents = f.read()
 
 	# To traverse and get the names
